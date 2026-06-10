@@ -1,0 +1,142 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: completion
+  name: 뉴스레터생성기
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.6@e2665624a156f52160927bceac9e169bd7e5ae6b936ae82575e14c90af390e6e
+    version: null
+kind: app
+model_config:
+  agent_mode:
+    enabled: false
+    max_iteration: 10
+    strategy: function_call
+    tools: []
+  annotation_reply:
+    enabled: false
+  chat_prompt_config: {}
+  completion_prompt_config: {}
+  dataset_configs:
+    datasets:
+      datasets: []
+    reranking_enable: false
+    retrieval_model: multiple
+    top_k: 4
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .WEBM
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gpt-4
+    provider: langgenius/openai/openai
+  more_like_this:
+    enabled: true
+  opening_statement: null
+  pre_prompt: '사용자의 입력을 바탕으로 다음 조건을 충족하는 뉴스레터를 작성해 줘.
+
+     
+
+    - 대상 계층은 {{age}}세의 {{gender}}, {{persona}}라는 특징을 고려해 뉴스레터 본문을 작성해야 해.
+
+    - {{name}}을 포함한 클릭률이 높아질 만한 제목을 설정해줘.
+
+    - 본문 내에 {{url}} 링크를 삽입해 줘.
+
+    - {{details}}의 내용를 구매 욕구가 높아지도록 매력적으로 소개해 줘.
+
+     
+
+    다음은 금지사항이야.
+
+    - 본문에 직접 대상 계층 정보를 게재하지 않을 것.
+
+    - 소개하는 내용은 {{details}}의 내용과 모순되지 않을 것.
+
+    - 제목과 본문 이외의 정보는 추가하지 않을 것.'
+  prompt_type: simple
+  retriever_resource:
+    enabled: true
+  sensitive_word_avoidance:
+    configs: []
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: false
+  suggested_questions: []
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form:
+  - text-input:
+      default: ''
+      label: 상품/서비스명을 입력하세요.
+      max_length: 48
+      required: true
+      variable: name
+  - paragraph:
+      default: ''
+      label: 상품/서비스의 상세 내용을 입력하세요.
+      max_length: 500
+      required: true
+      variable: details
+  - select:
+      default: ''
+      label: 대상의 성별을 선택하세요.
+      options:
+      - 남성
+      - 여성
+      required: false
+      variable: gender
+  - number:
+      default: ''
+      label: 대상의 연령을 입력하세요.
+      required: true
+      variable: age
+  - paragraph:
+      default: ''
+      label: '대상의 성격, 취미, 라이프스타일 등의 특징을 입력하세요. '
+      max_length: 500
+      required: false
+      variable: persona
+  - text-input:
+      default: ''
+      label: 사용자가 클릭하도록 할 URL을 입력하세요.
+      max_length: 200
+      required: false
+      variable: url
+version: 0.4.0

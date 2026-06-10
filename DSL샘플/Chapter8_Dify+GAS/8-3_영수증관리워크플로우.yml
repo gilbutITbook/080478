@@ -1,0 +1,379 @@
+app:
+  description: ''
+  icon: purse
+  icon_background: '#E0F2FE'
+  icon_type: emoji
+  mode: workflow
+  name: 영수증 관리 워크플로우
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.20@de0063a630a6d1b2c025fb84f3462ba5151fb60618309cd595c3f4711b1df847
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.6@e2665624a156f52160927bceac9e169bd7e5ae6b936ae82575e14c90af390e6e
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1774657021429-source-1774658607630-target
+      source: '1774657021429'
+      sourceHandle: source
+      target: '1774658607630'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1774658607630-source-1774658836910-target
+      source: '1774658607630'
+      sourceHandle: source
+      target: '1774658836910'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: http-request
+      id: 1774658836910-source-1774659098303-target
+      source: '1774658836910'
+      sourceHandle: source
+      target: '1774659098303'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: if-else
+      id: 1774659098303-source-1774659319473-target
+      source: '1774659098303'
+      sourceHandle: source
+      target: '1774659319473'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: end
+      id: 1774659319473-true-1774659413760-target
+      source: '1774659319473'
+      sourceHandle: 'true'
+      target: '1774659413760'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: end
+      id: 1774659319473-false-1774659532467-target
+      source: '1774659319473'
+      sourceHandle: 'false'
+      target: '1774659532467'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 시작
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          default: ''
+          hint: ''
+          label: 등록할 영수증 데이터를 업로드하세요.
+          options: []
+          placeholder: ''
+          required: true
+          type: file
+          variable: file
+      height: 108
+      id: '1774657021429'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 70e55295-caa4-4ebb-a8de-cbdc77ecb2d8
+          role: system
+          text: "## 지시\n영수증의 정보를 추출해 줘. 추출할 정보는 다음 3가지야. \n\n## 항목 \n- 금액 \n- 날짜\n\
+            - 발행처"
+        selected: false
+        title: 영수증 읽기
+        type: llm
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1774657021429'
+            - file
+          enabled: true
+      height: 87
+      id: '1774658607630'
+      position:
+        x: 382
+        y: 282
+      positionAbsolute:
+        x: 382
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: e96051c1-12e7-432c-9468-21e3f59ebb04
+          role: system
+          text: "##지시:\n{{영수증 읽기/ text}}를 다음 JSON 형식으로 변환해 텍스트 형식으로 출력해 줘.\n- 불필요한\
+            \ 내용은 제거하고 JSON 형식 데이터만 출력할 것 \n- 금액은 단위를 붙이지 말고 숫자 값으로 출력할 것\n\n## 출력\
+            \ 형식: \n｛\n   \"Amount\": \"{{#1774658607630.text#}}에서 금액\",\n   \"Date\"\
+            : \"{{#1774658607630.text#}}에서 날짜\",\n   \"Issuer\": \"{{#1774658607630.text#}}에서\
+            \ 발행처 정보\"\n｝\n"
+        selected: false
+        title: JSON 데이터 생성
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1774658836910'
+      position:
+        x: 683
+        y: 282
+      positionAbsolute:
+        x: 683
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data:
+          - id: key-value-55
+            key: ''
+            type: text
+            value: '{{#1774658836910.text#}}'
+          type: json
+        headers: ''
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 요청
+        type: http-request
+        url: https://script.google.com/macros/s/AKfycbx_R2nenOOEADpQhCHjd2TLp8WhbewzFpH5NhTI1D_RWnZnjPlYJPT3JACIdJAJUitD/exec
+        variables: []
+      height: 184
+      id: '1774659098303'
+      position:
+        x: 984
+        y: 282
+      positionAbsolute:
+        x: 984
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: c14194b9-6f3f-40cc-89d2-c9fa9b96b823
+            value: success
+            varType: string
+            variable_selector:
+            - '1774659098303'
+            - body
+          id: 'true'
+          logical_operator: and
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 147
+      id: '1774659319473'
+      position:
+        x: 1285
+        y: 282
+      positionAbsolute:
+        x: 1285
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        outputs:
+        - value_selector:
+          - '1774658607630'
+          - text
+          value_type: string
+          variable: text
+        - value_selector:
+          - '1774658836910'
+          - text
+          value_type: string
+          variable: text_1
+        selected: false
+        title: 스츠레드시트 저장 완료
+        type: end
+      height: 113
+      id: '1774659413760'
+      position:
+        x: 1586
+        y: 282
+      positionAbsolute:
+        x: 1586
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        outputs:
+        - value_selector:
+          - '1774658607630'
+          - text
+          value_type: string
+          variable: text
+        - value_selector:
+          - '1774658836910'
+          - text
+          value_type: string
+          variable: text_1
+        selected: false
+        title: '스프레드시트 저장 실패 '
+        type: end
+      height: 113
+      id: '1774659532467'
+      position:
+        x: 1586
+        y: 434
+      positionAbsolute:
+        x: 1586
+        y: 434
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: -1335.5
+      y: 105.5
+      zoom: 1
+  rag_pipeline_variables: []

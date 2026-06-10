@@ -1,0 +1,214 @@
+app:
+  description: ''
+  icon: memo
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: '회의록 작성 워크 플로우 '
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.20@de0063a630a6d1b2c025fb84f3462ba5151fb60618309cd595c3f4711b1df847
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1774624141201-source-1774625047300-target
+      source: '1774624141201'
+      sourceHandle: source
+      target: '1774625047300'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1774625047300-source-1774628932750-target
+      source: '1774625047300'
+      sourceHandle: source
+      target: '1774628932750'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 시작
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - audio
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          default: ''
+          hint: ''
+          label: 음성 파일을 업로드해 주세요.
+          options: []
+          placeholder: ''
+          required: true
+          type: file
+          variable: file
+      height: 108
+      id: '1774624141201'
+      position:
+        x: 88
+        y: 250
+      positionAbsolute:
+        x: 88
+        y: 250
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 12d22472-9895-438c-b8e5-42ef6c7e6d3c
+          role: system
+          text: '회의록을 다음과 같은 형식에 따라 작성해 줘. 각 항목을 요약해서 정리해.
+
+
+            【회의 내용】
+
+            1. [주요 안건 / 주제]
+
+            - 주요 발언
+
+            - 결정 사항
+
+
+            2. [다음 안건 / 주제]
+
+            - 주요 발언
+
+            - 결정 사항
+
+
+            【향후 조치】
+
+            - 작업 항목
+
+            - 담당자
+
+            - 마감일
+
+            '
+        - id: 99ebec32-d7c0-446a-955e-fb9e3074fc7d
+          role: user
+          text: '{{#1774624141201.file#}}'
+        selected: false
+        title: 회의록 작성
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1774625047300'
+      position:
+        x: 390
+        y: 250
+      positionAbsolute:
+        x: 390
+        y: 250
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    - data:
+        outputs:
+        - value_selector:
+          - '1774625047300'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 출력
+        type: end
+      height: 87
+      id: '1774628932750'
+      position:
+        x: 691
+        y: 250
+      positionAbsolute:
+        x: 691
+        y: 250
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 241
+    viewport:
+      x: -423.5
+      y: 143.99999999999994
+      zoom: 1
+  rag_pipeline_variables: []

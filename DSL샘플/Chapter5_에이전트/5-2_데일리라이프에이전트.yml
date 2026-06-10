@@ -1,0 +1,122 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: agent-chat
+  name: 데일리 라이프 에이전트
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/google:0.0.9@d360bbc433f39be1b11909cb9c32e6be4a17ea06af083f9e1c7613bb802bf517
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.6@e2665624a156f52160927bceac9e169bd7e5ae6b936ae82575e14c90af390e6e
+    version: null
+kind: app
+model_config:
+  agent_mode:
+    enabled: true
+    max_iteration: 10
+    prompt: null
+    strategy: function_call
+    tools:
+    - enabled: true
+      notAuthor: false
+      provider_id: langgenius/google/google
+      provider_name: langgenius/google/google
+      provider_type: builtin
+      tool_label: GoogleSearch
+      tool_name: google_search
+      tool_parameters:
+        gl: null
+        hl: null
+        location: null
+        query: null
+      type: builtin
+  annotation_reply:
+    enabled: false
+  chat_prompt_config:
+    prompt:
+    - role: system
+      text: ''
+  completion_prompt_config:
+    conversation_histories_role:
+      assistant_prefix: ''
+      user_prefix: ''
+    prompt:
+      text: ''
+  dataset_configs:
+    datasets:
+      datasets: []
+    retrieval_model: multiple
+    top_k: 4
+  dataset_query_variable: ''
+  external_data_tools: []
+  file_upload:
+    allowed_file_extensions:
+    - .JPG
+    - .JPEG
+    - .PNG
+    - .GIF
+    - .WEBP
+    - .SVG
+    - .MP4
+    - .MOV
+    - .MPEG
+    - .WEBM
+    allowed_file_types: []
+    allowed_file_upload_methods:
+    - remote_url
+    - local_file
+    enabled: false
+    image:
+      detail: high
+      enabled: false
+      number_limits: 3
+      transfer_methods:
+      - remote_url
+      - local_file
+    number_limits: 3
+  model:
+    completion_params:
+      stop: []
+    mode: chat
+    name: gpt-4o-mini
+    provider: langgenius/openai/openai
+  more_like_this:
+    enabled: false
+  opening_statement: '오늘의 일정을 알려주세요. '
+  pre_prompt: "사용자의 하루가 최고의 하루가 될 수 있도록 어시스턴트로서 유용한 정보를 제공해 줘.\n\n#Step1\n- 사용자의 입력에서\
+    \ 오늘의 행선지 {{destination}}와 목적 {{purpose}}를 추출한다.\n\n#Step2\n- google_search를 이용해\
+    \ \"오늘의 {{destination}} 날씨\"를 검색한다.\n- google_search를 이용해 \"오늘의 {{destination}}\
+    \ 교통 정보\"를 검색한다.\n- google_search를 이용해 {{purpose}}나 {{destination}}에 관련된 \"최신\
+    \ 뉴스\"를 검색한다.\n\n#Step3\n- Step2에서 얻은 정보를 바탕으로 \"오늘의 운세\"를 점친다. \n- 오늘의 운세\n-\
+    \ 오늘의 함정\n- 오늘의 행운 아이템\n\n#Step4\n- Step2와 Step3의 결과를 다음 순서대로 사용자에게 표시한다.\n- \"\
+    오늘의 {{destination}} 날씨\"\n- \"오늘의 {{destination}} 교통 정보\"\n- \"최신 뉴스\"\n- \"오늘의\
+    \ 운세\"\n- \"오늘의 함정\"\n- \"오늘의 행운 아이템\"\n\n마지막으로 사용자가 오늘 하루 힘내서 보낼 수 있도록 응원의 메시지를\
+    \ 출력해 줘.\n"
+  prompt_type: simple
+  retriever_resource:
+    enabled: true
+  sensitive_word_avoidance:
+    config: {}
+    enabled: false
+    type: ''
+  speech_to_text:
+    enabled: true
+  suggested_questions:
+  - 너는 무슨 일을 할 수 있어?
+  - '뭐라고 입력해야 해? '
+  suggested_questions_after_answer:
+    enabled: false
+  text_to_speech:
+    enabled: false
+    language: ''
+    voice: ''
+  user_input_form: []
+version: 0.6.0
