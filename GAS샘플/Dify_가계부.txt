@@ -1,0 +1,40 @@
+function doPost(e) {
+  try {
+    var jsonData = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('가계부');
+    var currentDate = new Date();
+   
+    var data = {
+      timestamp: currentDate,
+      category: jsonData.Category || '',
+      person: jsonData.Person || '',
+      name: jsonData.Name || '',
+      amount: jsonData.Amount || '',
+      details: jsonData.Details || ''
+    };
+
+
+    // 마지막 행의 다음 행 가져오기 
+    var lastRow = sheet.getLastRow() + 1;
+   
+    // A-F열에만 데이터를 추가
+    sheet.getRange(lastRow, 1, 1, 6).setValues([[
+      data.timestamp,
+      data.category,
+      data.person,
+      data.name,
+      data.amount,
+      data.details
+    ]]);
+   
+    return ContentService.createTextOutput(JSON.stringify({status: 'success'}))
+      .setMimeType(ContentService.MimeType.JSON);
+     
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'error',
+      message: error.toString()
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
+  }
+}

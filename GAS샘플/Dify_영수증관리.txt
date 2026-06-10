@@ -1,0 +1,32 @@
+function doPost(e) {
+  try {
+    // 요청의 JSON 데이터 분석
+    var jsonData = JSON.parse(e.postData.contents);
+    
+    // 현재 스프레드시트를 가져와 시트 이름을 지정
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('영수증관리');
+    
+    // 현재 날짜 가져옴  
+    var currentDate = new Date();
+    
+    // 데이터를 저장할 오브젝트
+    var data = {
+      timestamp: currentDate,
+      amount: jsonData.Amount || '',
+      date: jsonData.Date || '',
+      issuer: jsonData.Issuer || ''
+    };
+    
+    // 스프레드시트에 새로운 행을 추가
+    sheet.appendRow([data.timestamp, data.amount, data.date, data.issuer]);
+    
+    // 성공 상태를 반환
+    return ContentService.createTextOutput(JSON.stringify({status: 'success'}))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch (error) {
+    // 오류 발생시 처리
+    return ContentService.createTextOutput(JSON.stringify({status: 'error', message: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
